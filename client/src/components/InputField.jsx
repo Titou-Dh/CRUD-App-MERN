@@ -24,7 +24,7 @@ export default function InputField() {
 
   return (
     <div className="absolute w-full h-full inset-0 flex items-center justify-center bg-main ">
-      <div className="xl:w-1/3 sm:w-9/12 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700  ">
+      <div className="xl:w-1/3 sm:w-96 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700  ">
         <div className="  flex justify-end">
           <Link to="/">
             <svg
