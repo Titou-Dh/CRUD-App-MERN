@@ -2,9 +2,7 @@ const express = require("express")
 const app = express()
 const cors = require('cors');
 
-app.use(cors({
-    origin: 'http://localhost:5173'
-}));
+app.use(cors());
 
 const mdb = require("mongoose")
 mdb.connect("mongodb+srv://titoudh:99793434@cluster0.kf0adfq.mongodb.net/crud-app?retryWrites=true&w=majority")
