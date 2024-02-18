@@ -1,37 +1,27 @@
-import { Axios } from "axios";
-import { Link } from "react-router-dom";
 
-export default function InputField() {
-  const createBook = () => {
-    Axios.post("http://localhost:3001/createBook", {
-      name: "test",
-      author: "test",
-      year: 1234,
-    }).then((res) => {
-      console.log("ajouter avec succe ");
-    });
-  };
 
+function Modal(book , setHidden, hidden) {
+  const h1 =
+    "absolute w-full h-full inset-0 flex items-center justify-center  ";
+  const h0 =
+    "absolute w-full h-full inset-0 flex items-center justify-center hidden  ";
   return (
-    <div className="absolute w-full h-full inset-0 flex items-center justify-center bg-main ">
+    <div className={hidden ? h0 : h1}>
       <div className="xl:w-1/3 sm:w-9/12 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700  ">
         <div className="  flex justify-end">
-          <Link to="/" >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="#fff"
-              viewBox="0 0 384 512"
-              className="w-5 cursor-pointer "
-            >
-              <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
-            </svg>
-          </Link>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="#fff"
+            viewBox="0 0 384 512"
+            className="w-5 cursor-pointer "
+            onClick={() => setHidden(true)}
+          >
+            <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
+          </svg>
         </div>
 
         <form className="max-w-md mx-auto">
-          <h2 className="font-bold text-white text-2xl text-center">
-            Add New Book
-          </h2>
+          <h2 className="font-bold text-white text-2xl text-center">Modify </h2>
           <div className="relative z-0 w-full mb-5 group">
             <input
               type="text"
@@ -39,6 +29,7 @@ export default function InputField() {
               id="title"
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
+              value={book.name}
               required
             />
             <label
@@ -56,6 +47,7 @@ export default function InputField() {
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
               required
+              value={book.author}
             />
             <label
               htmlFor="auth"
@@ -71,6 +63,7 @@ export default function InputField() {
               id="year"
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
+              value={book.year}
               required
             />
             <label
@@ -80,20 +73,13 @@ export default function InputField() {
               Released year
             </label>
           </div>
-          <div className="text-center flex items-center justify-center gap-2">
+          <div className="text-center">
             <button
               type="submit"
-              onSubmit={() => createBook}
               className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-7 py-4 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
               Submit
             </button>
-            <Link
-              to="/"
-              className="text-white bg-gray-500 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-7 py-4 text-center"
-            >
-              Cancel
-            </Link>
           </div>
         </form>
       </div>
