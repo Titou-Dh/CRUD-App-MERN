@@ -1,22 +1,32 @@
-import { Axios } from "axios";
+import Axios from "axios";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function InputField() {
-  const createBook = () => {
+  const [name, setName] = useState("");
+  const [author, setAuthor] = useState("");
+  const [year, setYear] = useState(0);
+  const createBook = (event) => {
+
+    event.preventDefault();
     Axios.post("http://localhost:3001/createBook", {
-      name: "test",
-      author: "test",
-      year: 1234,
-    }).then((res) => {
-      console.log("ajouter avec succe ");
-    });
+      name: name,
+      author: author,
+      year: year,
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.error("Error creating book:", error);
+      });
   };
 
   return (
     <div className="absolute w-full h-full inset-0 flex items-center justify-center bg-main ">
       <div className="xl:w-1/3 sm:w-9/12 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700  ">
         <div className="  flex justify-end">
-          <Link to="/" >
+          <Link to="/">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="#fff"
@@ -28,7 +38,7 @@ export default function InputField() {
           </Link>
         </div>
 
-        <form className="max-w-md mx-auto">
+        <form className="max-w-md mx-auto" onSubmit={createBook}>
           <h2 className="font-bold text-white text-2xl text-center">
             Add New Book
           </h2>
@@ -40,6 +50,7 @@ export default function InputField() {
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
               required
+              onChange={(e) => setName(e.target.value)}
             />
             <label
               htmlFor="title"
@@ -56,6 +67,7 @@ export default function InputField() {
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
               required
+              onChange={(e) => setAuthor(e.target.value)}
             />
             <label
               htmlFor="auth"
@@ -72,6 +84,7 @@ export default function InputField() {
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
               required
+              onChange={(e) => setYear(e.target.value)}
             />
             <label
               htmlFor="year"
@@ -83,7 +96,6 @@ export default function InputField() {
           <div className="text-center flex items-center justify-center gap-2">
             <button
               type="submit"
-              onSubmit={() => createBook}
               className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-7 py-4 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
               Submit
