@@ -1,12 +1,7 @@
-const mongoose = require("mongoose")
-const { v4: uuidv4 } = require('uuid');
+const {Schema, model} = require("mongoose")
 
 
-const bookSchema = new mongoose.Schema({
-    _id:{
-        type:String,
-        default: uuidv4,
-    },
+const bookSchema = new Schema({
     name :{
         type:String,
     },
@@ -18,6 +13,6 @@ const bookSchema = new mongoose.Schema({
     },
 })
 
-const bookModel = mongoose.model("books",bookSchema)
+const bookModel = model("books",bookSchema)
 
 module.exports = bookModel

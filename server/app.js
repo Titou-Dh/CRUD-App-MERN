@@ -32,13 +32,27 @@ app.get("/books", async (req, res) => {
 // });
 
 
-app.post("/createBook", async (req,res)=>{
-    const book =req.body;
+app.post("/createBook", async (req, res) => {
+    const book = req.body;
     const newBook = new bookModel(book);
     await newBook.save();
     res.json(req.body)
 })
 
+
+app.delete("/books/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deletedBook = await bookModel.findByIdAndDelete(id);
+        if (!deletedBook) {
+          return res.status(404).json({ error: 'Book not found' });
+        }
+        res.json({ message: 'Book deleted successfully', deletedBook });
+      } catch (error) {
+        console.error('Error deleting book:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+      }
+});
 
 app.listen("3001", () => {
     console.log("server works")
