@@ -1,13 +1,13 @@
 import Axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export default function InputField() {
   const [name, setName] = useState("");
   const [author, setAuthor] = useState("");
   const [year, setYear] = useState(0);
   const createBook = (event) => {
-
     event.preventDefault();
     Axios.post("http://localhost:3001/createBook", {
       name: name,
@@ -16,6 +16,14 @@ export default function InputField() {
     })
       .then((res) => {
         console.log(res);
+        Swal.fire({
+          title: "Created",
+          text: "Your book added successfully",
+          icon: "success",
+          confirmButtonText: "Return to main menu",
+        }).then((result) => {
+          result.isConfirmed ? history.push("/") : history.push("/book/add");
+        });
       })
       .catch((error) => {
         console.error("Error creating book:", error);
