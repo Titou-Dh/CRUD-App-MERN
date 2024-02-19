@@ -6,25 +6,39 @@ import Swal from "sweetalert2";
 export default function InputField() {
   const [name, setName] = useState("");
   const [author, setAuthor] = useState("");
-  const [year, setYear] = useState(0);
+  const [year, setYear] = useState("");
   const createBook = (event) => {
     event.preventDefault();
+    
+    // Validate inputs
+    if (!name.trim() || !author.trim() || isNaN(parseInt(year))) {
+      Swal.fire({
+        title: "Error",
+        text: "Please fill out all fields correctly.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+      return;
+    }
+
     Axios.post("http://localhost:3001/createBook", {
       name: name,
       author: author,
-      year: year,
+      year: parseInt(year),
     })
       .then((res) => {
         // console.log(res);
         Swal.fire({
           title: "Created",
-          text: "Your book added successfully",
+          text: "Your book was added successfully",
           icon: "success",
           confirmButtonText: "Return to main menu",
           cancelButtonText: "Add new Book",
           showCancelButton: true,
         }).then((result) => {
-          result.isConfirmed ?  window.location.href = "/" :  window.location.href = "add";
+          result.isConfirmed
+            ? (window.location.href = "/")
+            : (window.location.href = "add");
         });
       })
       .catch((error) => {
@@ -60,6 +74,7 @@ export default function InputField() {
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
               required
+              value={name}
               onChange={(e) => setName(e.target.value)}
             />
             <label
@@ -77,6 +92,7 @@ export default function InputField() {
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
               required
+              value={author}
               onChange={(e) => setAuthor(e.target.value)}
             />
             <label
@@ -94,6 +110,7 @@ export default function InputField() {
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
               required
+              value={year}
               onChange={(e) => setYear(e.target.value)}
             />
             <label
