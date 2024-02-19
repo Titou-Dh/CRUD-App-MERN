@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Axios from "axios";
 import { Link } from "react-router-dom";
 import "./../index.css";
+import Swal from "sweetalert2";
 
 function Books() {
   const [books, setBooks] = useState([]);
@@ -21,14 +22,35 @@ function Books() {
   };
 
   const handleDelete = (id) => {
-    Axios.delete(`http://localhost:3001/books/${id}`)
-      .then((res) => {
-        console.log("Book deleted successfully:", res.data);
-        fetchBooks(); // Refresh the book list after deletion
-      })
-      .catch((error) => {
-        console.error("Error deleting book:", error);
-      });
+    Swal.fire({
+      title: "Delete",
+      text: "Are you Sure ,you want t delete this book ?",
+      icon: "question",
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
+      showCancelButton: true,
+    }).then((result) => {
+      result.isConfirmed
+        ? Axios.delete(`http://localhost:3001/books/${id}`)
+
+            .then((res) => {
+              console.log("Book deleted successfully:", res.data);
+              Swal.fire({
+                title: "Deleted",
+                text: "Deleted succesfully",
+                icon: "success",
+                confirmButtonText: "ok",
+              }).then((result) => {
+                result.isConfirmed
+                  ? fetchBooks()
+                  : (window.location.href = "/");
+              });
+            })
+            .catch((error) => {
+              console.error("Error deleting book:", error);
+            })
+        : (window.location.href = "/");
+    });
   };
 
   return (
@@ -65,11 +87,10 @@ function Books() {
               >
                 Delete
               </button>
-              <Link
-                to={`books/modify/${book._id}`}
-                className="bg-blue-600 text-white border border-gray-200 rounded-lg shadow dark:border-gray-700 px-6 w-1/2 py-2 text-lg font-semibold"
-              >
-                Modify
+              <Link to={`books/modify/${book._id}`}>
+                <button className="bg-blue-600 text-white border border-gray-200 rounded-lg shadow dark:border-gray-700 px-6 w-1/2 py-2 text-lg font-semibold">
+                  Modify
+                </button>
               </Link>
             </div>
           </div>
