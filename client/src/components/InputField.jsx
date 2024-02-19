@@ -15,15 +15,16 @@ export default function InputField() {
       year: year,
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         Swal.fire({
           title: "Created",
           text: "Your book added successfully",
           icon: "success",
           confirmButtonText: "Return to main menu",
           cancelButtonText: "Add new Book",
+          showCancelButton: true,
         }).then((result) => {
-          result.isConfirmed ?  window.location.href = "/" :  window.location.href = "/book/add";
+          result.isConfirmed ?  window.location.href = "/" :  window.location.href = "add";
         });
       })
       .catch((error) => {
