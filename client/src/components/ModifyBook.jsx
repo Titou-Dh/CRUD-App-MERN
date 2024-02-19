@@ -5,7 +5,7 @@ import { Link, useParams } from "react-router-dom";
 function ModifyBook() {
   const { id } = useParams(); // Extract the book ID from the URL parameter
   const [name, setName] = useState("");
-  const [book, setBook] = useState({});
+  const [book, setBook] = useState({ name: "", author: "", year: 0 });
   const [author, setAuthor] = useState("");
   const [year, setYear] = useState("");
 
@@ -13,12 +13,18 @@ function ModifyBook() {
   useEffect(() => {
     Axios.get(`http://localhost:3001/books/${id}`)
       .then((res) => {
-        setBook(res.data)
+        setBook(res.data);
       })
       .catch((error) => {
-        console.error("Error fetching book:", error);
+        if (error.response && error.response.status === 404) {
+          console.log("Book not found");
+          // Handle the case when the book is not found, e.g., redirect to a 404 page or display a message to the user
+        } else {
+          console.error('Error fetching book:', error);
+          // Handle other errors, e.g., display a generic error message to the user
+        }
       });
-  }, [id]);
+  }, []);
 
   // Handler function to update the book information
   const handleUpdate = () => {
@@ -53,7 +59,7 @@ function ModifyBook() {
           </Link>
         </div>
 
-        <form className="max-w-md mx-auto">
+        <form className="max-w-md mx-auto" onSubmit={handleUpdate}>
           <h2 className="font-bold text-white text-2xl text-center">
             Add New Book
           </h2>
@@ -64,9 +70,9 @@ function ModifyBook() {
               id="title"
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
-              required
-              value={name}
+              value={book.name}
               onChange={(e) => setName(e.target.value)}
+              required
             />
             <label
               htmlFor="title"
@@ -82,9 +88,9 @@ function ModifyBook() {
               id="auth"
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
-              required
               value={book.author}
               onChange={(e) => setAuthor(e.target.value)}
+              required
             />
             <label
               htmlFor="auth"
@@ -100,9 +106,9 @@ function ModifyBook() {
               id="year"
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
-              required
               value={book.year}
               onChange={(e) => setYear(e.target.value)}
+              required
             />
             <label
               htmlFor="year"
@@ -114,7 +120,7 @@ function ModifyBook() {
           <div className="text-center flex items-center justify-center gap-2">
             <button
               type="submit"
-              onClick={handleUpdate}
+              
               className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-7 py-4 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
               Submit
