@@ -21,8 +21,9 @@ export default function InputField() {
           text: "Your book added successfully",
           icon: "success",
           confirmButtonText: "Return to main menu",
+          cancelButtonText: "Add new Book",
         }).then((result) => {
-          result.isConfirmed ? history.push("/") : history.push("/book/add");
+          result.isConfirmed ?  window.location.href = "/" :  window.location.href = "/book/add";
         });
       })
       .catch((error) => {
