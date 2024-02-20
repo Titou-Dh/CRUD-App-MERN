@@ -3,14 +3,13 @@ import Axios from "axios";
 import { Link, useParams } from "react-router-dom";
 
 function ModifyBook() {
-  const { id } = useParams(); // Extract the book ID from the URL parameter
+  const { id } = useParams();
   const [name, setName] = useState("");
   const [book, setBook] = useState({ name: "", author: "", year: 0 });
   const [author, setAuthor] = useState("");
-  const [year, setYear] = useState("");
+  const [year, setYear] = useState(0);
 
-  // Fetch the book data from the server based on its ID
-  useEffect(() => {
+  const loadData = () => {
     Axios.get(`http://localhost:3001/books/${id}`)
       .then((res) => {
         setBook(res.data);
@@ -18,20 +17,20 @@ function ModifyBook() {
       .catch((error) => {
         if (error.response && error.response.status === 404) {
           console.log("Book not found");
-          // Handle the case when the book is not found, e.g., redirect to a 404 page or display a message to the user
         } else {
-          console.error('Error fetching book:', error);
-          // Handle other errors, e.g., display a generic error message to the user
+          console.error("Error fetching book:", error);
         }
       });
-  }, []);
+  };
 
-  // Handler function to update the book information
+  useEffect(() => {
+    loadData();
+  }, []);
   const handleUpdate = () => {
     Axios.put(`http://localhost:3001/books/${id}`, {
-      name,
-      author,
-      year,
+      name: name,
+      author: author,
+      year: year,
     })
       .then((res) => {
         console.log("Book updated successfully:", res.data);
@@ -44,7 +43,10 @@ function ModifyBook() {
   };
 
   return (
-    <div className="absolute w-full h-full inset-0 flex items-center justify-center bg-main ">
+    <div
+      className="absolute w-full h-full inset-0 flex items-center justify-center bg-main "
+      // onLoad={loadData}
+    >
       <div className="xl:w-1/3 sm:w-96 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700  ">
         <div className="  flex justify-end">
           <Link to="/">
@@ -68,9 +70,65 @@ function ModifyBook() {
               type="text"
               name="title"
               id="title"
-              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              disabled
+              className="disabled:opacity-75 block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
               value={book.name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+            <label
+              htmlFor="title"
+              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >
+               old Title
+            </label>
+          </div>
+          <div className="relative z-0 w-full mb-5 group">
+            <input
+              type="text"
+              name="auth"
+              id="auth"
+              className="disabled:opacity-75 block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              placeholder=" "
+              disabled
+              value={book.author}
+              onChange={(e) => setAuthor(e.target.value)}
+              required
+            />
+            <label
+              htmlFor="auth"
+              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >
+               old Author
+            </label>
+          </div>
+          <div className="relative z-0 w-full mb-5 group">
+            <input
+              type="text"
+              name="year"
+              id="year"
+              className="disabled:opacity-75 block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              placeholder=" "
+              value={book.year}
+              disabled
+              onChange={(e) => setYear(e.target.value)}
+              required
+            />
+            <label
+              htmlFor="year"
+              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >
+             old Released year
+            </label>
+          </div>
+          <div className="relative z-0 w-full mb-5 group">
+            <input
+              type="text"
+              name="title"
+              id="title"
+              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              placeholder=" "
               onChange={(e) => setName(e.target.value)}
               required
             />
@@ -88,7 +146,6 @@ function ModifyBook() {
               id="auth"
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
-              value={book.author}
               onChange={(e) => setAuthor(e.target.value)}
               required
             />
@@ -96,7 +153,7 @@ function ModifyBook() {
               htmlFor="auth"
               className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
-              Author
+              new Author
             </label>
           </div>
           <div className="relative z-0 w-full mb-5 group">
@@ -106,7 +163,6 @@ function ModifyBook() {
               id="year"
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
-              value={book.year}
               onChange={(e) => setYear(e.target.value)}
               required
             />
@@ -114,13 +170,12 @@ function ModifyBook() {
               htmlFor="year"
               className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
-              Released year
+              new Released year
             </label>
           </div>
           <div className="text-center flex items-center justify-center gap-2">
             <button
               type="submit"
-              
               className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-7 py-4 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
               Submit
