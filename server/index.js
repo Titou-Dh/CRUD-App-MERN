@@ -11,7 +11,7 @@ app.use(cors(
 ));
 
 const mdb = require("mongoose")
-mdb.connect("mongodb+srv://titoudh:99793434@cluster0.kf0adfq.mongodb.net/?retryWrites=true&w=majority")
+mdb.connect("mongodb+srv://titoudh:99793434@cluster0.kf0adfq.mongodb.net/crud-app?retryWrites=true&w=majority")
 
 const bookModel = require("./models/books")
 
@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
 
 app.get("/books", async (req, res) => {
     const books = await bookModel.find();
-    res.json(books);
+    res.json(books)
 })
 
 
