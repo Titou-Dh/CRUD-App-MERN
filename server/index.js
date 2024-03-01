@@ -16,6 +16,10 @@ mdb.connect("mongodb+srv://titoudh:99793434@cluster0.kf0adfq.mongodb.net/crud-ap
 const bookModel = require("./models/books")
 
 
+app.get("/", (req, res) => {
+    res.json("Hello")
+})
+
 app.get("/books", async (req, res) => {
     const books = await bookModel.find();
     res.json(books)
