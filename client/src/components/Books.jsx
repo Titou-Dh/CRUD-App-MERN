@@ -10,7 +10,7 @@ function Books() {
   useEffect(() => {
     fetchBooks();
   }, []);
-
+  Axios.defauls.withCredentials = true;
   const fetchBooks = () => {
     Axios.get("https://crud-app-mern-api-three.vercel.app/books")
       .then((res) => {
