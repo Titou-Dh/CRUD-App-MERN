@@ -11,7 +11,7 @@ app.use(cors(
 ));
 
 const mdb = require("mongoose")
-mdb.connect("mongodb+srv://titoudh:99793434@cluster0.kf0adfq.mongodb.net/crud-app?retryWrites=true&w=majority")
+mdb.connect("mongodb+srv://titoudh:99793434@cluster0.kf0adfq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 
 const bookModel = require("./models/books")
 
