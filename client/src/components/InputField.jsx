@@ -22,7 +22,7 @@ export default function InputField() {
       return;
     }
 
-    Axios.post("http://localhost:3001/createBook", {
+    Axios.post("http://crud-app-mern-api-three.vercel.app/createBook", {
       name: name,
       author: author,
       year: parseInt(year),

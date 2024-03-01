@@ -12,7 +12,7 @@ function Books() {
   }, []);
 
   const fetchBooks = () => {
-    Axios.get("http://localhost:3001/books")
+    Axios.get("http://crud-app-mern-api-three.vercel.app/books")
       .then((res) => {
         setBooks(res.data);
         setLoad(1);
