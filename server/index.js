@@ -90,9 +90,9 @@ app.put('/books/:id', async (req, res) => {
     }
 });
 
-// app.listen("3001", () => {
-//     console.log("server works")
-// })
+app.listen("3001", () => {
+    console.log("server works")
+})
 
 
 
