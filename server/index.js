@@ -6,6 +6,7 @@ app.use(cors(
     {
         origin: "https://crud-app-mern-five.vercel.app",
         methods:["POST", "GET", "DELETE"],
+        credentials: true
     }
 ));
 
