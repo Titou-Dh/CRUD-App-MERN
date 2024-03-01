@@ -2,7 +2,13 @@ const express = require("express")
 const app = express()
 const cors = require('cors');
 app.use(express.json());
-app.use(cors());
+app.use(cors(
+    {
+        origin: 'http://localhost:3000',
+        methods:["POST", "GET", "DELETE"],
+        credentials: true
+    }
+));
 
 const mdb = require("mongoose")
 mdb.connect("mongodb+srv://titoudh:99793434@cluster0.kf0adfq.mongodb.net/crud-app?retryWrites=true&w=majority")
