@@ -4,7 +4,7 @@ const cors = require('cors');
 app.use(express.json());
 app.use(cors(
     {
-        origin: 'http://crud-app-mern-api-three.vercel.app',
+        origin: 'https://crud-app-mern-api-three.vercel.app/',
         methods:["POST", "GET", "DELETE"],
         credentials: true
     }
