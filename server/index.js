@@ -21,8 +21,8 @@ app.get("/", (req, res) => {
 })
 
 app.get("/books", async (req, res) => {
-    const books = await bookModel.find();
-    res.json(books)
+    // const books = await bookModel.find();
+    res.json("Books")
 })
 
 
