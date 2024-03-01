@@ -10,7 +10,7 @@ function ModifyBook() {
   const [year, setYear] = useState(0);
 
   const loadData = () => {
-    Axios.get(`http://crud-app-mern-api-three.vercel.app/books/${id}`)
+    Axios.get(`https://crud-app-mern-api-three.vercel.app/books/${id}`)
       .then((res) => {
         setBook(res.data);
       })

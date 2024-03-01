@@ -12,7 +12,7 @@ function Books() {
   }, []);
 
   const fetchBooks = () => {
-    Axios.get("http://crud-app-mern-api-three.vercel.app/books")
+    Axios.get("https://crud-app-mern-api-three.vercel.app/books")
       .then((res) => {
         setBooks(res.data);
         setLoad(1);
@@ -32,7 +32,7 @@ function Books() {
       showCancelButton: true,
     }).then((result) => {
       result.isConfirmed
-        ? Axios.delete(`http://localhost:3001/books/${id}`)
+        ? Axios.delete(`https://crud-app-mern-api-three.vercel.app/books/${id}`)
 
             .then((res) => {
               console.log("Book deleted successfully:", res.data);
