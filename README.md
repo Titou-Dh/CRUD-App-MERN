@@ -57,8 +57,6 @@ To run the MERN Stack Book Store Project locally, follow these steps:
 ## Contributing
 Contributions to the MERN Stack Book Store Project are welcome! If you have suggestions for new features, bug fixes, or improvements, please open an issue or submit a pull request. For major changes, please discuss them with the project maintainers first.
 
-## License
-This project is licensed under the [MIT License](LICENSE).
 
 
 
