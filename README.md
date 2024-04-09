@@ -54,8 +54,6 @@ To run the MERN Stack Book Store Project locally, follow these steps:
 - Users can add books to their shopping cart and proceed to checkout securely.
 - Authentication is required for certain actions such as adding books to the cart or completing purchases.
 
-## Contributing
-Contributions to the MERN Stack Book Store Project are welcome! If you have suggestions for new features, bug fixes, or improvements, please open an issue or submit a pull request. For major changes, please discuss them with the project maintainers first.
 
 
 
