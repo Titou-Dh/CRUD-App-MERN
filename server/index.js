@@ -5,7 +5,7 @@ app.use(express.json());
 app.use(cors(
     {
         origin: "https://crud-app-mern-five.vercel.app",
-        methods:["POST", "GET", "DELETE"],
+        methods: ["POST", "GET", "DELETE"],
         credentials: true
     }
 ));
@@ -55,16 +55,16 @@ app.delete("/books/:id", async (req, res) => {
 
 app.get('/books/:id', async (req, res) => {
     try {
-      const book = await bookModel.findById(req.params.id);
-      if (!book) {
-        return res.status(404).json({ message: 'Book not found' });
-      }
-      res.json(book);
+        const book = await bookModel.findById(req.params.id);
+        if (!book) {
+            return res.status(404).json({ message: 'Book not found' });
+        }
+        res.json(book);
     } catch (error) {
-      console.error('Error fetching book:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
+        console.error('Error fetching book:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
-  });
+});
 
 
 app.put('/books/:id', async (req, res) => {
