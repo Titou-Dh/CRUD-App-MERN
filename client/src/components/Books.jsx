@@ -12,8 +12,9 @@ function Books() {
   }, []);
   Axios.defaults.withCredentials = true;
   const fetchBooks = () => {
-    Axios.get("https://crud-app-mern-api-three.vercel.app/books")
+    Axios.get("http://localhost:3001/books")
       .then((res) => {
+        console.log("Books fetched successfully:", res.data);
         setBooks(res.data);
         setLoad(1);
       })
@@ -32,7 +33,7 @@ function Books() {
       showCancelButton: true,
     }).then((result) => {
       result.isConfirmed
-        ? Axios.delete(`https://crud-app-mern-api-three.vercel.app/books/${id}`)
+        ? Axios.delete(`http://localhost:3001/books/${id}`)
 
             .then((res) => {
               console.log("Book deleted successfully:", res.data);
@@ -67,6 +68,10 @@ function Books() {
       {load == 0 ? (
         <div className="text-center flex items-center justify-center min-h-screen text-white text-4xl">
           <h1>Loading...</h1>
+        </div>
+      ) : books.length === 0 ? (
+        <div className="text-center flex items-center justify-center min-h-screen text-white text-4xl">
+          <h1>No Books Available</h1>
         </div>
       ) : (
         <div className="grid xl:grid-cols-3 md:px-16 md:grid-cols-2 sm:grid-cols-1 sm:px-10 gap-4 xl:px-52 py-16">

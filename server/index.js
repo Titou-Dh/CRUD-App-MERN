@@ -1,19 +1,37 @@
+require('dotenv').config();
 const express = require("express")
 const app = express()
 const cors = require('cors');
 app.use(express.json());
+
+
 app.use(cors(
     {
-        origin: "https://crud-app-mern-five.vercel.app",
-        methods: ["POST", "GET", "DELETE"],
+        origin: 'http://localhost:5173',
+        methods:["POST", "GET", "DELETE", "PUT"],
         credentials: true
     }
 ));
 
 const mdb = require("mongoose")
-mdb.connect("mongodb+srv://titoudh:99793434@cluster0.kf0adfq.mongodb.net/crud-app?retryWrites=true&w=majority")
+
+const uri = process.env.MONGODB_URI;
+
+
+mdb.connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})
+    .then(() => {
+        console.log("Connected to MongoDB");
+    })
+    .catch(err => {
+        console.error("Error connecting to MongoDB", err);
+        process.exit(1);
+    });
 
 const bookModel = require("./models/books")
+
 
 
 app.get("/", (req, res) => {
