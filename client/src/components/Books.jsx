@@ -12,7 +12,7 @@ function Books() {
   }, []);
   Axios.defaults.withCredentials = true;
   const fetchBooks = () => {
-    Axios.get("http://localhost:3001/books")
+    Axios.get("http://localhost:9999/books")
       .then((res) => {
         console.log("Books fetched successfully:", res.data);
         setBooks(res.data);
@@ -33,7 +33,7 @@ function Books() {
       showCancelButton: true,
     }).then((result) => {
       result.isConfirmed
-        ? Axios.delete(`http://localhost:3001/books/${id}`)
+        ? Axios.delete(`http://localhost:9999/books/${id}`)
 
             .then((res) => {
               console.log("Book deleted successfully:", res.data);

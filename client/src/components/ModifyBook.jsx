@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -11,8 +11,8 @@ function ModifyBook() {
   const [author, setAuthor] = useState("");
   const [year, setYear] = useState("");
 
-  const loadData = () => {
-    Axios.get(`http://localhost:3001/books/${id}`)
+  const loadData = useCallback(() => {
+    Axios.get(`http://localhost:9999/books/${id}`)
       .then((res) => {
         setBook(res.data);
         setName(res.data.name);
@@ -26,20 +26,20 @@ function ModifyBook() {
           console.error("Error fetching book:", error);
         }
       });
-  };
+  }, [id]);
 
   useEffect(() => {
     loadData();
-  }, []);
+  }, [id, loadData]);
 
   const handleUpdate = (e) => {
     e.preventDefault();
-    Axios.put(`http://localhost:3001/books/${id}`, {
+    Axios.put(`http://localhost:9999/books/${id}`, {
       name: name,
       author: author,
       year: year,
     })
-      .then((res) => {
+      .then(() => {
         Swal.fire({
           title: "Updated",
           text: "Book updated successfully",
@@ -77,13 +77,14 @@ function ModifyBook() {
         </div>
 
         <form className="max-w-md mx-auto" onSubmit={handleUpdate}>
-          <h2 className="font-bold text-white text-2xl text-center">Modify Book</h2>
+          <h2 className="font-bold text-white text-2xl text-center">
+            Modify Book
+          </h2>
           <div className="relative z-0 w-full mb-5 group">
             <input
               type="text"
               name="oldTitle"
               id="oldTitle"
-              
               className="disabled:opacity-75 block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
               value={book.name}

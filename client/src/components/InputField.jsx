@@ -7,10 +7,10 @@ export default function InputField() {
   const [name, setName] = useState("");
   const [author, setAuthor] = useState("");
   const [year, setYear] = useState("");
-  
+
   const createBook = (event) => {
     event.preventDefault();
-    
+
     // Validate inputs
     if (!name.trim() || !author.trim() || isNaN(parseInt(year))) {
       Swal.fire({
@@ -22,12 +22,12 @@ export default function InputField() {
       return;
     }
 
-    Axios.post("http://localhost:3001/createBook", {
+    Axios.post("http://localhost:9999/createBook", {
       name: name,
       author: author,
       year: parseInt(year),
     })
-      .then((res) => {
+      .then(() => {
         // console.log(res);
         Swal.fire({
           title: "Created",
