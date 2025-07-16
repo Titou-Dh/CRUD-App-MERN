@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  # Frontend React/Vite Application
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - VITE_API_URL=http://localhost:9999
+    depends_on:
+      - backend
+    networks:
+      - mern-network
+
+  # Backend Express/Node.js Application
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "9999:9999"
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - MONGODB_URI=mongodb://database:27017/crud-mern-app
+      - PORT=9999
+    depends_on:
+      - database
+    networks:
+      - mern-network
+
+  # MongoDB Database
+  database:
+    image: mongo:7.0
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=crud-mern-app
+    networks:
+      - mern-network
+
+volumes:
+  mongodb_data:
+    driver: local
+
+networks:
+  mern-network:
+    driver: bridge
